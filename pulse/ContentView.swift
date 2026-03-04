@@ -114,21 +114,20 @@ struct ContentView: View {
     
     private var articleListView: some View {
         ScrollView {
-            GlassEffectContainer(spacing: 20) {
-                LazyVStack(spacing: 16) {
-                    if filteredArticles.isEmpty {
-                        noArticlesView
-                    } else {
-                        ForEach(filteredArticles) { article in
-                            NavigationLink(destination: ArticleDetailView(article: article)) {
-                                ArticleCardView(article: article)
-                            }
-                            .buttonStyle(.plain)
+            LazyVStack(spacing: 16) {
+                if filteredArticles.isEmpty {
+                    noArticlesView
+                } else {
+                    ForEach(filteredArticles) { article in
+                        NavigationLink(destination: ArticleDetailView(article: article)) {
+                            ArticleCardView(article: article)
                         }
+                        .buttonStyle(.plain)
                     }
                 }
-                .padding()
             }
+            .padding(.horizontal)
+            .padding(.vertical, 20)
         }
         .refreshable {
             await refreshFeedsAsync()

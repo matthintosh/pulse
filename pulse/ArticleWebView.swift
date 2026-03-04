@@ -6,29 +6,28 @@
 //
 
 import SwiftUI
-import WebKit
+import SafariServices
 
-struct ArticleWebView: View {
+struct ArticleWebView: UIViewControllerRepresentable {
     let url: URL
-    @Environment(\.dismiss) private var dismiss
     
-    var body: some View {
-        WebView(url: url)
-            .navigationTitle("Article")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    ShareLink(item: url) {
-                        Image(systemName: "square.and.arrow.up")
-                    }
-                    .buttonStyle(.glass)
-                }
-            }
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        let configuration = SFSafariViewController.Configuration()
+        configuration.entersReaderIfAvailable = true // Active le mode lecture automatiquement
+        configuration.barCollapsingEnabled = true
+        
+        let safariVC = SFSafariViewController(url: url, configuration: configuration)
+        safariVC.preferredControlTintColor = .systemBlue
+        safariVC.dismissButtonStyle = .close
+        
+        return safariVC
+    }
+    
+    func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {
+        // Pas besoin de mettre à jour
     }
 }
 
 #Preview {
-    NavigationStack {
-        ArticleWebView(url: URL(string: "https://www.apple.com")!)
-    }
+    ArticleWebView(url: URL(string: "https://www.apple.com")!)
 }

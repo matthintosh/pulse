@@ -20,16 +20,23 @@ struct ArticleCardView: View {
                     case .empty:
                         Rectangle()
                             .fill(Color.gray.opacity(0.2))
+                            .frame(height: 200)
                             .overlay {
                                 ProgressView()
                             }
                     case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
+                        GeometryReader { geometry in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: geometry.size.width, height: 200)
+                                .clipped()
+                        }
+                        .frame(height: 200)
                     case .failure:
                         Rectangle()
                             .fill(Color.gray.opacity(0.2))
+                            .frame(height: 200)
                             .overlay {
                                 Image(systemName: "photo")
                                     .font(.largeTitle)
@@ -64,15 +71,17 @@ struct ArticleCardView: View {
                     .font(.headline)
                     .lineLimit(2)
                     .foregroundStyle(.primary)
+                    .fixedSize(horizontal: false, vertical: true)
                 
                 // Description
                 Text(article.articleDescription)
                     .font(.subheadline)
                     .lineLimit(3)
                     .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                 
                 // Metadata
-                HStack {
+                HStack(spacing: 8) {
                     if !article.isRead {
                         Circle()
                             .fill(.blue)
@@ -82,8 +91,9 @@ struct ArticleCardView: View {
                     Text(article.publishDate, style: .relative)
                         .font(.caption)
                         .foregroundStyle(.tertiary)
+                        .lineLimit(1)
                     
-                    Spacer()
+                    Spacer(minLength: 0)
                     
                     if let feedTitle = article.feed?.title {
                         Text(feedTitle)

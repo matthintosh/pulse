@@ -24,16 +24,23 @@ struct ArticleDetailView: View {
                         case .empty:
                             Rectangle()
                                 .fill(Color.gray.opacity(0.1))
+                                .frame(height: 280)
                                 .overlay {
                                     ProgressView()
                                 }
                         case .success(let image):
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
+                            GeometryReader { geometry in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: geometry.size.width, height: 280)
+                                    .clipped()
+                            }
+                            .frame(height: 280)
                         case .failure:
                             Rectangle()
                                 .fill(Color.gray.opacity(0.1))
+                                .frame(height: 280)
                                 .overlay {
                                     Image(systemName: "photo")
                                         .font(.system(size: 60))
@@ -43,7 +50,6 @@ struct ArticleDetailView: View {
                             EmptyView()
                         }
                     }
-                    .frame(maxWidth: .infinity)
                     .frame(height: 280)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     .glassEffect(.regular, in: .rect(cornerRadius: 20))
@@ -62,6 +68,7 @@ struct ArticleDetailView: View {
                                     .font(.subheadline)
                                     .fontWeight(.medium)
                                     .foregroundStyle(.blue)
+                                    .lineLimit(1)
                             }
                             
                             Text("•")
@@ -70,6 +77,7 @@ struct ArticleDetailView: View {
                             Text(article.publishDate, format: .dateTime.day().month().year())
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
+                                .lineLimit(1)
                         }
                         
                         // Title
@@ -77,6 +85,7 @@ struct ArticleDetailView: View {
                             .font(.system(.title, design: .serif, weight: .bold))
                             .foregroundStyle(.primary)
                             .lineSpacing(4)
+                            .fixedSize(horizontal: false, vertical: true)
                         
                         // Description/Summary
                         if !article.articleDescription.isEmpty {
@@ -84,19 +93,10 @@ struct ArticleDetailView: View {
                                 .font(.title3)
                                 .foregroundStyle(.secondary)
                                 .lineSpacing(4)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                     }
                     .padding(.top, article.firstImageURL != nil ? 24 : 0)
-                    
-                    Divider()
-                        .padding(.vertical, 4)
-                    
-                    // Article Body
-                    Text(article.content)
-                        .font(.body)
-                        .foregroundStyle(.primary)
-                        .lineSpacing(8)
-                        .textSelection(.enabled)
                     
                     // Original Article Link
                     if let url = URL(string: article.link) {
@@ -104,18 +104,18 @@ struct ArticleDetailView: View {
                             showingWebView = true
                         } label: {
                             HStack(spacing: 12) {
-                                Image(systemName: "safari")
+                                Image(systemName: "doc.text")
                                     .font(.title3)
                                 
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text("Read Full Article")
                                         .font(.headline)
-                                    Text("Open in app")
+                                    Text("Opens in Reader Mode")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
                                 }
                                 
-                                Spacer()
+                                Spacer(minLength: 0)
                                 
                                 Image(systemName: "arrow.up.right")
                                     .font(.title3)
@@ -125,8 +125,9 @@ struct ArticleDetailView: View {
                         }
                         .buttonStyle(.plain)
                         .padding(.top, 8)
-                        .navigationDestination(isPresented: $showingWebView) {
+                        .fullScreenCover(isPresented: $showingWebView) {
                             ArticleWebView(url: url)
+                                .ignoresSafeArea()
                         }
                     }
                 }
