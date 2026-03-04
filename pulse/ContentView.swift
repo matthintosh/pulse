@@ -75,7 +75,6 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "line.3.horizontal.decrease.circle")
                     }
-                    .buttonStyle(.glass)
                 }
                 
                 ToolbarItem(placement: .primaryAction) {
@@ -84,7 +83,6 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: showUnreadOnly ? "envelope.badge.fill" : "envelope.open")
                     }
-                    .buttonStyle(.glass)
                 }
                 
                 ToolbarItem(placement: .primaryAction) {
@@ -93,7 +91,6 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "arrow.clockwise")
                     }
-                    .buttonStyle(.glass)
                     .disabled(isRefreshing)
                 }
                 
@@ -103,7 +100,6 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "gearshape")
                     }
-                    .buttonStyle(.glass)
                 }
             }
             .sheet(isPresented: $showingFeedManagement) {
@@ -156,10 +152,8 @@ struct ContentView: View {
                 showingFeedManagement = true
             } label: {
                 Label("Add Your First Feed", systemImage: "plus.circle.fill")
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 12)
             }
-            .buttonStyle(.glassProminent)
+            .buttonStyle(.borderedProminent)
             
             VStack(alignment: .leading, spacing: 12) {
                 Text("Get started with popular feeds:")

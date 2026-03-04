@@ -136,7 +136,6 @@ struct AddFeedView: View {
                     Button("Cancel") {
                         dismiss()
                     }
-                    .buttonStyle(.glass)
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
@@ -149,7 +148,6 @@ struct AddFeedView: View {
                             Text("Add")
                         }
                     }
-                    .buttonStyle(.glassProminent)
                     .disabled(feedTitle.isEmpty || feedURL.isEmpty || isValidating)
                 }
             }

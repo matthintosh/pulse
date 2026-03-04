@@ -98,6 +98,17 @@ struct ArticleDetailView: View {
                     }
                     .padding(.top, article.firstImageURL != nil ? 24 : 0)
                     
+                    Divider()
+                        .padding(.vertical, 4)
+                    
+                    // Article Body
+                    Text(article.content)
+                        .font(.body)
+                        .foregroundStyle(.primary)
+                        .lineSpacing(8)
+                        .textSelection(.enabled)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
                     // Original Article Link
                     if let url = URL(string: article.link) {
                         Button {
@@ -153,13 +164,11 @@ struct ArticleDetailView: View {
                         )
                         .labelStyle(.iconOnly)
                     }
-                    .buttonStyle(.glass)
                     
                     ShareLink(item: URL(string: article.link)!) {
                         Label("Share", systemImage: "square.and.arrow.up")
                             .labelStyle(.iconOnly)
                     }
-                    .buttonStyle(.glass)
                 }
             }
         }

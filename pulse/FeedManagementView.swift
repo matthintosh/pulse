@@ -40,7 +40,6 @@ struct FeedManagementView: View {
                     Button("Done") {
                         dismiss()
                     }
-                    .buttonStyle(.glass)
                 }
                 
                 ToolbarItem(placement: .primaryAction) {
@@ -49,7 +48,6 @@ struct FeedManagementView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
-                    .buttonStyle(.glass)
                 }
                 
                 ToolbarItem(placement: .primaryAction) {
@@ -58,7 +56,6 @@ struct FeedManagementView: View {
                     } label: {
                         Image(systemName: "arrow.clockwise")
                     }
-                    .buttonStyle(.glass)
                     .disabled(isRefreshing)
                 }
             }
@@ -87,10 +84,8 @@ struct FeedManagementView: View {
                 showingAddFeed = true
             } label: {
                 Label("Add Feed", systemImage: "plus")
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 12)
             }
-            .buttonStyle(.glassProminent)
+            .buttonStyle(.borderedProminent)
         }
         .padding(40)
         .glassEffect(.regular, in: .rect(cornerRadius: 20))
@@ -148,10 +143,7 @@ struct FeedRowView: View {
                 onDelete()
             } label: {
                 Image(systemName: "trash")
-                    .font(.body)
-                    .foregroundStyle(.red)
             }
-            .buttonStyle(.glass)
         }
         .padding(16)
         .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 16))
