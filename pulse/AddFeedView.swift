@@ -28,11 +28,11 @@ struct AddFeedView: View {
                             .foregroundStyle(.blue)
                             .glassEffect(.regular.tint(.blue), in: .circle)
                         
-                        Text("Add RSS Feed")
+                        Text("Add RSS Feed", bundle: .main, comment: "Add feed title")
                             .font(.title2)
                             .fontWeight(.semibold)
                         
-                        Text("Enter the feed name and RSS URL")
+                        Text("Enter the feed name and RSS URL", bundle: .main, comment: "Add feed instructions")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
@@ -44,7 +44,7 @@ struct AddFeedView: View {
                     // Form
                     VStack(alignment: .leading, spacing: 20) {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Feed Name")
+                            Text("Feed Name", bundle: .main, comment: "Feed name field label")
                                 .font(.subheadline)
                                 .fontWeight(.medium)
                             
@@ -55,7 +55,7 @@ struct AddFeedView: View {
                         }
                         
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("RSS URL")
+                            Text("RSS URL", bundle: .main, comment: "RSS URL field label")
                                 .font(.subheadline)
                                 .fontWeight(.medium)
                             
@@ -86,7 +86,7 @@ struct AddFeedView: View {
                     
                     // Popular Feeds Suggestions
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Popular Feeds")
+                        Text("Popular Feeds", bundle: .main, comment: "Popular feeds section title")
                             .font(.headline)
                             .padding(.horizontal)
                         
@@ -129,11 +129,11 @@ struct AddFeedView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Add Feed")
+            .navigationTitle(String(localized: "Add Feed", comment: "Add feed navigation title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button(String(localized: "Cancel", comment: "Cancel button")) {
                         dismiss()
                     }
                 }
@@ -145,7 +145,7 @@ struct AddFeedView: View {
                         if isValidating {
                             ProgressView()
                         } else {
-                            Text("Add")
+                            Text("Add", bundle: .main, comment: "Add button")
                         }
                     }
                     .disabled(feedTitle.isEmpty || feedURL.isEmpty || isValidating)
@@ -176,7 +176,7 @@ struct AddFeedView: View {
                 try await service.fetchFeed(feed)
                 dismiss()
             } catch {
-                errorMessage = "Failed to load feed. Please check the URL and try again."
+                errorMessage = String(localized: "Failed to load feed. Please check the URL and try again.", comment: "Feed load error message")
                 modelContext.delete(feed)
             }
         }

@@ -14,6 +14,7 @@ class RSSParser: NSObject, XMLParserDelegate {
     private var currentContent = ""
     private var currentLink = ""
     private var currentImageURL = ""
+    private var currentEnclosureURLs: [String] = []
     private var currentPubDate = ""
     
     private var parsingItem = false
@@ -26,6 +27,7 @@ class RSSParser: NSObject, XMLParserDelegate {
         let contentHTML: String?
         let link: String
         let imageURL: String?
+        let enclosureURLs: [String]?
         let publishDate: Date
     }
     
@@ -54,6 +56,7 @@ class RSSParser: NSObject, XMLParserDelegate {
             currentContent = ""
             currentLink = ""
             currentImageURL = ""
+            currentEnclosureURLs = []
             currentPubDate = ""
         }
         
@@ -62,24 +65,36 @@ class RSSParser: NSObject, XMLParserDelegate {
             if elementName == "media:content" || elementName == "media:thumbnail" {
                 if let url = attributeDict["url"] {
                     // Check if it's an image by URL or mime type
-                    let isImage = url.contains("image") || 
-                                  url.hasSuffix(".jpg") || 
-                                  url.hasSuffix(".jpeg") || 
-                                  url.hasSuffix(".png") || 
-                                  url.hasSuffix(".gif") || 
+                    let isImage = url.contains("image") ||
+                                  url.hasSuffix(".jpg") ||
+                                  url.hasSuffix(".jpeg") ||
+                                  url.hasSuffix(".png") ||
+                                  url.hasSuffix(".gif") ||
                                   url.hasSuffix(".webp") ||
                                   attributeDict["medium"] == "image" ||
                                   attributeDict["type"]?.contains("image") == true
                     
-                    if isImage && currentImageURL.isEmpty {
-                        currentImageURL = url
+                    if isImage {
+                        // Add to enclosures
+                        currentEnclosureURLs.append(url)
+                        
+                        // Set as main image if we don't have one yet
+                        if currentImageURL.isEmpty {
+                            currentImageURL = url
+                        }
                     }
                 }
             } else if elementName == "enclosure" {
-                if let url = attributeDict["url"],
-                   let type = attributeDict["type"],
-                   type.contains("image") && currentImageURL.isEmpty {
-                    currentImageURL = url
+                if let url = attributeDict["url"] {
+                    let type = attributeDict["type"] ?? ""
+                    
+                    // Add all enclosures
+                    currentEnclosureURLs.append(url)
+                    
+                    // If it's an image and we don't have one yet, set as main image
+                    if type.contains("image") && currentImageURL.isEmpty {
+                        currentImageURL = url
+                    }
                 }
             }
         }
@@ -122,6 +137,7 @@ class RSSParser: NSObject, XMLParserDelegate {
                 contentHTML: content.isEmpty ? nil : content, // Store raw HTML
                 link: currentLink,
                 imageURL: currentImageURL.isEmpty ? nil : currentImageURL,
+                enclosureURLs: currentEnclosureURLs.isEmpty ? nil : currentEnclosureURLs,
                 publishDate: publishDate
             )
             

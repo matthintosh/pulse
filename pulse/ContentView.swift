@@ -53,14 +53,14 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Pulse")
-            .searchable(text: $searchText, prompt: "Search articles")
+            .searchable(text: $searchText, prompt: Text("Search articles", bundle: .main, comment: "Search prompt"))
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
                         Button {
                             selectedFeed = nil
                         } label: {
-                            Label("All Feeds", systemImage: selectedFeed == nil ? "checkmark" : "")
+                            Label(String(localized: "All Feeds", comment: "Filter option for all feeds"), systemImage: selectedFeed == nil ? "checkmark" : "")
                         }
                         
                         Divider()
@@ -87,7 +87,9 @@ struct ContentView: View {
                 
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        refreshFeeds()
+                        Task {
+                            await refreshFeedsAsync()
+                        }
                     } label: {
                         Image(systemName: "arrow.clockwise")
                     }
@@ -138,11 +140,11 @@ struct ContentView: View {
                 .glassEffect(.regular.tint(.blue), in: .circle)
             
             VStack(spacing: 12) {
-                Text("Welcome to Pulse")
+                Text("Welcome to Pulse", bundle: .main, comment: "Welcome title")
                     .font(.title)
                     .fontWeight(.bold)
                 
-                Text("Your beautiful RSS reader with\nLiquid Glass design")
+                Text("Your beautiful RSS reader with\nLiquid Glass design", bundle: .main, comment: "Welcome subtitle")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -151,12 +153,12 @@ struct ContentView: View {
             Button {
                 showingFeedManagement = true
             } label: {
-                Label("Add Your First Feed", systemImage: "plus.circle.fill")
+                Label(String(localized: "Add Your First Feed", comment: "Button to add first feed"), systemImage: "plus.circle.fill")
             }
             .buttonStyle(.borderedProminent)
             
             VStack(alignment: .leading, spacing: 12) {
-                Text("Get started with popular feeds:")
+                Text("Get started with popular feeds:", bundle: .main, comment: "Popular feeds section header")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 
@@ -165,7 +167,7 @@ struct ContentView: View {
                 } label: {
                     HStack {
                         Image(systemName: "sparkles")
-                        Text("Add Sample Feeds")
+                        Text("Add Sample Feeds", bundle: .main, comment: "Button to add sample feeds")
                         Spacer()
                         Image(systemName: "arrow.right")
                     }
@@ -186,11 +188,11 @@ struct ContentView: View {
                 .font(.system(size: 50))
                 .foregroundStyle(.secondary)
             
-            Text(searchText.isEmpty ? "No articles yet" : "No matching articles")
+            Text(searchText.isEmpty ? String(localized: "No articles yet", comment: "No articles message") : String(localized: "No matching articles", comment: "No search results message"))
                 .font(.title3)
                 .fontWeight(.semibold)
             
-            Text(searchText.isEmpty ? "Pull to refresh your feeds" : "Try a different search term")
+            Text(searchText.isEmpty ? String(localized: "Pull to refresh your feeds", comment: "Refresh instruction") : String(localized: "Try a different search term", comment: "Search suggestion"))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }
@@ -199,20 +201,16 @@ struct ContentView: View {
         .glassEffect(.regular, in: .rect(cornerRadius: 20))
     }
     
-    private func refreshFeeds() {
-        Task {
-            await refreshFeedsAsync()
-        }
-    }
-    
+    @MainActor
     private func refreshFeedsAsync() async {
         guard !feeds.isEmpty else { return }
         
         isRefreshing = true
-        defer { isRefreshing = false }
         
         let service = RSSService(modelContext: modelContext)
         await service.refreshAllFeeds(feeds: feeds)
+        
+        isRefreshing = false
     }
     
     private func addSampleFeeds() {
@@ -228,10 +226,7 @@ struct ContentView: View {
         try? modelContext.save()
         
         Task {
-            let service = RSSService(modelContext: modelContext)
-            for feed in sampleFeeds {
-                try? await service.fetchFeed(feed)
-            }
+            await refreshFeedsAsync()
         }
     }
 }

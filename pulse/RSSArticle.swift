@@ -17,12 +17,13 @@ final class RSSArticle {
     var contentHTML: String? // Store raw HTML content for image extraction
     var link: String
     var imageURL: String?
+    var enclosureURLs: [String]? // Store all attached media URLs
     var publishDate: Date
     var isRead: Bool
     
     var feed: RSSFeed?
     
-    init(title: String, articleDescription: String, content: String, contentHTML: String? = nil, link: String, imageURL: String? = nil, publishDate: Date) {
+    init(title: String, articleDescription: String, content: String, contentHTML: String? = nil, link: String, imageURL: String? = nil, enclosureURLs: [String]? = nil, publishDate: Date) {
         self.id = UUID()
         self.title = title
         self.articleDescription = articleDescription
@@ -30,18 +31,47 @@ final class RSSArticle {
         self.contentHTML = contentHTML
         self.link = link
         self.imageURL = imageURL
+        self.enclosureURLs = enclosureURLs
         self.publishDate = publishDate
         self.isRead = false
     }
     
-    /// Extracts the first image URL from HTML content
+    /// Extracts the first available image URL from multiple sources
     var firstImageURL: String? {
+        // 1. Try explicit imageURL first
         if let imageURL = imageURL, !imageURL.isEmpty {
             return imageURL
         }
         
-        guard let html = contentHTML, !html.isEmpty else { return nil }
+        // 2. Try enclosure URLs (attached media)
+        if let enclosures = enclosureURLs, !enclosures.isEmpty {
+            // Return first image from enclosures
+            for url in enclosures {
+                if isImageURL(url) {
+                    return url
+                }
+            }
+        }
         
+        // 3. Try extracting from HTML content
+        if let html = contentHTML, !html.isEmpty {
+            if let extractedURL = extractImageFromHTML(html) {
+                return extractedURL
+            }
+        }
+        
+        return nil
+    }
+    
+    /// Checks if a URL is likely an image
+    private func isImageURL(_ urlString: String) -> Bool {
+        let imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"]
+        let lowercased = urlString.lowercased()
+        return imageExtensions.contains { lowercased.hasSuffix($0) } || lowercased.contains("image")
+    }
+    
+    /// Extracts first image URL from HTML content
+    private func extractImageFromHTML(_ html: String) -> String? {
         // Try to match <img> tags with src attribute (supports both double and single quotes)
         let patterns = [
             "<img[^>]+src=\"([^\"]+)\"",  // src="..."

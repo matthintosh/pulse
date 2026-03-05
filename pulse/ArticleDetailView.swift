@@ -119,9 +119,9 @@ struct ArticleDetailView: View {
                                     .font(.title3)
                                 
                                 VStack(alignment: .leading, spacing: 2) {
-                                    Text("Read Full Article")
+                                    Text("Read Full Article", bundle: .main, comment: "Button to read full article")
                                         .font(.headline)
-                                    Text("Opens in Reader Mode")
+                                    Text("Opens in Reader Mode", bundle: .main, comment: "Reader mode description")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
                                 }
@@ -159,14 +159,14 @@ struct ArticleDetailView: View {
                         try? modelContext.save()
                     } label: {
                         Label(
-                            article.isRead ? "Mark as Unread" : "Mark as Read",
+                            article.isRead ? String(localized: "Mark as Unread", comment: "Mark article as unread") : String(localized: "Mark as Read", comment: "Mark article as read"),
                             systemImage: article.isRead ? "checkmark.circle.fill" : "checkmark.circle"
                         )
                         .labelStyle(.iconOnly)
                     }
                     
                     ShareLink(item: URL(string: article.link)!) {
-                        Label("Share", systemImage: "square.and.arrow.up")
+                        Label(String(localized: "Share", comment: "Share button"), systemImage: "square.and.arrow.up")
                             .labelStyle(.iconOnly)
                     }
                 }

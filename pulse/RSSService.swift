@@ -42,6 +42,7 @@ class RSSService {
                 contentHTML: parsed.contentHTML,
                 link: parsed.link,
                 imageURL: parsed.imageURL,
+                enclosureURLs: parsed.enclosureURLs,
                 publishDate: parsed.publishDate
             )
             article.feed = feed

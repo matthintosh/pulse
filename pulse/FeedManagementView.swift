@@ -34,10 +34,10 @@ struct FeedManagementView: View {
                     .padding()
                 }
             }
-            .navigationTitle("Manage Feeds")
+            .navigationTitle(String(localized: "Manage Feeds", comment: "Feed management title"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Done") {
+                    Button(String(localized: "Done", comment: "Done button")) {
                         dismiss()
                     }
                 }
@@ -71,11 +71,11 @@ struct FeedManagementView: View {
                 .font(.system(size: 80))
                 .foregroundStyle(.secondary)
             
-            Text("No RSS Feeds")
+            Text("No RSS Feeds", bundle: .main, comment: "No feeds message")
                 .font(.title2)
                 .fontWeight(.semibold)
             
-            Text("Add your first RSS feed to get started")
+            Text("Add your first RSS feed to get started", bundle: .main, comment: "Add first feed instruction")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -83,7 +83,7 @@ struct FeedManagementView: View {
             Button {
                 showingAddFeed = true
             } label: {
-                Label("Add Feed", systemImage: "plus")
+                Label(String(localized: "Add Feed", comment: "Add feed button"), systemImage: "plus")
             }
             .buttonStyle(.borderedProminent)
         }
@@ -131,7 +131,7 @@ struct FeedRowView: View {
                     .lineLimit(1)
                 
                 if let lastUpdated = feed.lastUpdated {
-                    Text("Updated \(lastUpdated, style: .relative) ago")
+                    Text("Updated \(lastUpdated, style: .relative) ago", bundle: .main, comment: "Last update time")
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }

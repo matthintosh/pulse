@@ -13,18 +13,17 @@ struct ArticleWebView: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> SFSafariViewController {
         let configuration = SFSafariViewController.Configuration()
-        configuration.entersReaderIfAvailable = true // Active le mode lecture automatiquement
+        configuration.entersReaderIfAvailable = true // Automatically enables reader mode / Active le mode lecture automatiquement
         configuration.barCollapsingEnabled = true
         
         let safariVC = SFSafariViewController(url: url, configuration: configuration)
-        safariVC.preferredControlTintColor = .systemBlue
         safariVC.dismissButtonStyle = .close
         
         return safariVC
     }
     
     func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {
-        // Pas besoin de mettre à jour
+        // No need to update / Pas besoin de mettre à jour
     }
 }
 
