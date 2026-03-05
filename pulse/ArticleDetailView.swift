@@ -13,6 +13,7 @@ struct ArticleDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var article: RSSArticle
     @State private var showingWebView = false
+    @State private var showingReaderMode = false
     
     var body: some View {
         ScrollView {
@@ -155,6 +156,22 @@ struct ArticleDetailView: View {
             ToolbarItem(placement: .primaryAction) {
                 HStack(spacing: 12) {
                     Button {
+                        showingWebView = true
+                    } label: {
+                        Label( String(localized: "Reader Mode", comment: "Reader mode button"),systemImage: "safari")
+                            .labelStyle(.iconOnly)
+                    }
+                    Button {
+                        showingReaderMode = true
+                    } label: {
+                        Label(
+                            String(localized: "Reader Mode", comment: "Reader mode button"),
+                            systemImage: "doc.text"
+                        )
+                        .labelStyle(.iconOnly)
+                    }
+                    
+                    Button {
                         article.isRead.toggle()
                         try? modelContext.save()
                     } label: {
@@ -171,6 +188,9 @@ struct ArticleDetailView: View {
                     }
                 }
             }
+        }
+        .fullScreenCover(isPresented: $showingReaderMode) {
+            ReaderModeView(article: article)
         }
         .onAppear {
             if !article.isRead {

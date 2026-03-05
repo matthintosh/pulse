@@ -173,9 +173,9 @@ Potential improvements:
 - Dark mode optimization
 - Widget support with Liquid Glass
 - macOS menu bar integration
-- OPML import/export
+- ~~OPML import/export~~ ✅ **Implemented!**
 - Article categories/tags
-- Reader mode (text-only view)
+- ~~Reader mode (text-only view)~~ ✅ **Implemented!**
 
 ## Design Philosophy
 
@@ -371,9 +371,9 @@ Améliorations potentielles :
 - Optimisation du mode sombre
 - Support des widgets avec Liquid Glass
 - Intégration à la barre de menus macOS
-- Import/export OPML
+- ~~Import/export OPML~~ ✅ **Implémenté !**
 - Catégories/tags d'articles
-- Mode lecteur (vue texte uniquement)
+- ~~Mode lecteur (vue texte uniquement)~~ ✅ **Implémenté !**
 
 ## Philosophie de design
 

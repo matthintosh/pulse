@@ -14,6 +14,7 @@ struct FeedManagementView: View {
     @Query private var feeds: [RSSFeed]
     
     @State private var showingAddFeed = false
+    @State private var showingOPML = false
     @State private var isRefreshing = false
     
     var body: some View {
@@ -44,6 +45,14 @@ struct FeedManagementView: View {
                 
                 ToolbarItem(placement: .primaryAction) {
                     Button {
+                        showingOPML = true
+                    } label: {
+                        Image(systemName: "arrow.up.arrow.down.circle")
+                    }
+                }
+                
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
                         showingAddFeed = true
                     } label: {
                         Image(systemName: "plus")
@@ -61,6 +70,9 @@ struct FeedManagementView: View {
             }
             .sheet(isPresented: $showingAddFeed) {
                 AddFeedView()
+            }
+            .sheet(isPresented: $showingOPML) {
+                OPMLImportExportView()
             }
         }
     }

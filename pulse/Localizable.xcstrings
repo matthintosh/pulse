@@ -4,8 +4,26 @@
     "" : {
 
     },
+    "%lld already exist" : {
+      "comment" : "Import skip message"
+    },
+    "%lld failed to load" : {
+      "comment" : "Import fail message"
+    },
+    "%lld feeds imported" : {
+      "comment" : "Import success message"
+    },
+    "%lldpt" : {
+
+    },
     "•" : {
 
+    },
+    "Aa" : {
+
+    },
+    "About OPML" : {
+      "comment" : "Info section title"
     },
     "Add" : {
       "comment" : "Add button",
@@ -126,6 +144,9 @@
         }
       }
     },
+    "Backup or restore your RSS feeds" : {
+      "comment" : "OPML screen subtitle"
+    },
     "Cancel" : {
       "comment" : "Cancel button",
       "localizations" : {
@@ -142,6 +163,9 @@
           }
         }
       }
+    },
+    "Choose OPML File" : {
+      "comment" : "Import button"
     },
     "content (stripped):" : {
 
@@ -189,6 +213,18 @@
         }
       }
     },
+    "Error" : {
+      "comment" : "Error alert title"
+    },
+    "Export %lld feeds" : {
+      "comment" : "Export button"
+    },
+    "Export all your feeds to an OPML file" : {
+      "comment" : "Export description"
+    },
+    "Export Feeds" : {
+      "comment" : "Export section title"
+    },
     "Failed to load feed. Please check the URL and try again." : {
       "comment" : "Feed load error message",
       "localizations" : {
@@ -205,6 +241,9 @@
           }
         }
       }
+    },
+    "Failed to parse OPML file" : {
+      "comment" : "OPML parsing error"
     },
     "Feed Name" : {
       "comment" : "Feed name field label",
@@ -225,6 +264,9 @@
     },
     "firstImageURL:" : {
 
+    },
+    "Font Size" : {
+      "comment" : "Font size label"
     },
     "Get started with popular feeds:" : {
       "comment" : "Popular feeds section header",
@@ -248,6 +290,18 @@
     },
     "imageURL:" : {
 
+    },
+    "Import Complete" : {
+      "comment" : "Import alert title"
+    },
+    "Import Feeds" : {
+      "comment" : "Import section title"
+    },
+    "Import feeds from an OPML file" : {
+      "comment" : "Import description"
+    },
+    "Invalid OPML format" : {
+      "comment" : "OPML format error"
     },
     "Manage Feeds" : {
       "comment" : "Feed management title",
@@ -317,6 +371,12 @@
         }
       }
     },
+    "No feeds found in OPML file" : {
+      "comment" : "No feeds error"
+    },
+    "No feeds to export" : {
+      "comment" : "No feeds message"
+    },
     "No matching articles" : {
       "comment" : "No search results message",
       "localizations" : {
@@ -351,6 +411,12 @@
         }
       }
     },
+    "OK" : {
+      "comment" : "OK button"
+    },
+    "Only feed URLs are exported, no personal data" : {
+      "comment" : "OPML description"
+    },
     "Opens in Reader Mode" : {
       "comment" : "Reader mode description",
       "localizations" : {
@@ -368,6 +434,18 @@
         }
       }
     },
+    "OPML" : {
+      "comment" : "OPML navigation title"
+    },
+    "OPML file not found" : {
+      "comment" : "File not found error"
+    },
+    "OPML Import/Export" : {
+      "comment" : "OPML screen title"
+    },
+    "OPML is the standard format for RSS feed lists" : {
+      "comment" : "OPML description"
+    },
     "Popular Feeds" : {
       "comment" : "Popular feeds section title",
       "localizations" : {
@@ -384,6 +462,9 @@
           }
         }
       }
+    },
+    "Portable" : {
+      "comment" : "OPML info"
     },
     "Pull to refresh your feeds" : {
       "comment" : "Refresh instruction",
@@ -422,6 +503,15 @@
         }
       }
     },
+    "Reader Mode" : {
+      "comment" : "Reader mode button\nReader mode title"
+    },
+    "Reader Settings" : {
+      "comment" : "Reader settings title"
+    },
+    "Reset to Default" : {
+      "comment" : "Reset button"
+    },
     "RSS URL" : {
       "comment" : "RSS URL field label",
       "localizations" : {
@@ -438,6 +528,12 @@
           }
         }
       }
+    },
+    "Safe" : {
+      "comment" : "OPML info"
+    },
+    "Save to file or share" : {
+      "comment" : "Export subtitle"
     },
     "Search articles" : {
       "comment" : "Search prompt",
@@ -456,6 +552,9 @@
         }
       }
     },
+    "Select file from device" : {
+      "comment" : "Import subtitle"
+    },
     "Share" : {
       "comment" : "Share button",
       "localizations" : {
@@ -472,6 +571,12 @@
           }
         }
       }
+    },
+    "Standard Format" : {
+      "comment" : "OPML info"
+    },
+    "Transfer feeds between different RSS readers" : {
+      "comment" : "OPML description"
     },
     "Try a different search term" : {
       "comment" : "Search suggestion",
